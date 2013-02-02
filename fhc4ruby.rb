@@ -2,7 +2,6 @@ require 'net/http'
 require 'uri'
 require 'json'
 
-
 class FHC
   class FHCResult < Hash
     def initialize(json_str)
@@ -25,8 +24,7 @@ class FHC
   def initialize(key, host, port=80)
     @key  = key
     @host = host
-    @port = port
-    @port = @port.to_i
+    @port = port.to_i
 
     @apikey_keyname = "webapi_apikey"
     Net::HTTP.version_1_2
