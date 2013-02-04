@@ -36,7 +36,7 @@ class FHC
     end
     opts.each do |k, v|
       next if (k == @apikey_keyname)
-      api_path << "&#{k}=#{URI.encode(v)}"
+      api_path << "&#{k}=#{URI.encode(v.to_s)}"
     end
 
     Net::HTTP.start(@host, @port) do |http|
@@ -99,6 +99,22 @@ class FHC
     opt = {}
     ret = _call_fhc_api_get(api_path, opt)
     return ret["lumi"]
+  end
+
+  def speak(str, noplay=false, async=false)
+    api_path = "/api/speak"
+    opt = {
+      "str"    => str,
+      "noplay" => (noplay ? 1 : 0),
+      "async"  => (async  ? 1 : 0)
+    }
+    return _call_fhc_api_get(api_path, opt)
+  end
+
+  def create_speak_cache(str)
+    api_path = "/api/speak"
+    opt = { "str"    => str, "noplay" => 1, "async"  => 1 }
+    return _call_fhc_api_get(api_path, opt)
   end
 
 end
